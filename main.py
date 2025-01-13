@@ -94,12 +94,11 @@ def text_to_speech(text):
 
 
 def generate_text(prompt_text):
-    a = '8cdebf6b-d122-402b-b703-66b6c66c5639'
     # 火山引擎API的端点地址，这里需要替换为真实有效的地址
     url = "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
 
     payload = json.dumps({
-        "model": "ep-20250111221520-5pcbg",
+        "model": input("model"),
         "stream": True,
         "messages": [
             {
@@ -111,7 +110,7 @@ def generate_text(prompt_text):
     })
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + a
+        'Authorization': input("Author")
     }
 
     try:
