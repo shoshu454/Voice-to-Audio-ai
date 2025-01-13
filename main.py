@@ -10,7 +10,6 @@ import json
 
 class Gui(QWidget):
     def __init__(self):
-        # 加载ui文件，创建qt文件对象，加载文件对象并创建ui对象
         super().__init__()
         QtFileObj = QFile("firsttime.ui")
         QtFileObj.open(QFile.ReadOnly)
@@ -34,7 +33,7 @@ class Gui(QWidget):
         # 插入内容
         logger_item = {
             'one': '-' * 20, 'two': '-' * 20, 'three': '-' * 20, 'four': '-' * 20,
-            'five': '程序已经开始运行，请勿多次点击开始运行按钮'
+            'five': ''
         }
         self.ui.tableWidgetAnswer.insertRow(int(self.ui.tableWidgetAnswer.rowCount()))
         self.index += 1
@@ -111,7 +110,7 @@ def generate_text(prompt_text):
         ]
     })
     headers = {
-        'Authorization': 'Bearer 8cdebf6b-d122-402b-b703-66b6c66c5639',
+        'Authorization': 'Bearer YOUR_API_KEY',
         'Content-Type': 'application/json',
         'max_tokens': '50'
     }
@@ -119,8 +118,6 @@ def generate_text(prompt_text):
     response = requests.request("POST", url, headers=headers, data=payload)
 
     # message_content = response_json.get('message', {}).get('content')
-    # response = {'text': ''}
-    # response['text'] = {"choices":[{"finish_reason":"stop","index":0,"logprobs":'null',"message":{"content":"以下是一段描写春天景色的优美文字：\n\n春天如一幅绚丽的画卷，。","role":"assistant"}}],"created":1736777574,"id":"021736777566162e9c84b913dc3d17489c8a44078364cc12b2d4e","model":"doubao-pro-4k-240515","object":"chat.completion","usage":{"completion_tokens":220,"prompt_tokens":19,"total_tokens":239,"prompt_tokens_details":{"cached_tokens":0}}}
     response_json = response.json()
     content = response_json['choices'][0]['message']['content']
     # print(content)
