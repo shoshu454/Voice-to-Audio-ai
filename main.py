@@ -94,37 +94,28 @@ def text_to_speech(text):
 
 
 def generate_text(prompt_text):
-    # 火山引擎API的端点地址，这里需要替换为真实有效的地址
     url = "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
 
     payload = json.dumps({
         "model": "ep-20250111221520-5pcbg",
-        "stream": True,
         "messages": [
+            # {
+            #     "role": "system",
+            #     "content": "You are a helpful assistant."
+            # },
             {
-                "role": "system",
+                "role": "user",
                 "content": prompt_text
             }
         ]
-
     })
     headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer 8cdebf6b-d122-402b-b703-66b6c66c5639'
+        'Authorization': 'Bearer 8cdebf6b-d122-402b-b703-66b6c66c5639',
+        'Content-Type': 'application/json'
     }
 
-    try:
-        response = requests.request("POST", url, headers=headers, data=payload)
-        if response.status_code == 200:
-            result = response.json()
-            return result.get('generated_text', '')  # 假设返回结果中生成文字在这个字段下，按实际改
-        else:
-            return f"请求失败，状态码: {response.status_code}，错误信息: {response.text}"
-    except requests.RequestException as e:
-        return f"请求发生异常: {str(e)}"
-
-
-
+    response = requests.request("POST", url, headers=headers, data=payload)
+    print(response['text'])
 
 
 if __name__ == '__main__':
