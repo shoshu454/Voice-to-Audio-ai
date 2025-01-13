@@ -126,31 +126,7 @@ def generate_text(prompt_text):
 
 
 
-    # 你的Access Key
-    # access_key = "AKLTYThiZTFkOTViMTI5NDQ2NjllOWE5MmUwMzU2ZTc3Mzg"
-    # # 你的Secret Key
-    # secret_key = "WVdReU9EQTJPRFEyTldKbE5EQm1Nemt6WkdVeFlUUTVaR1prTmpObVpXSQ=="
-    # # 构建认证头信息，具体格式需按实际要求来，此处为示例
-    # auth_header = f"Bearer {access_key}:{secret_key}"
-    # headers = {
-    #     "Authorization": auth_header,
-    #     "Content-Type": "application/json"  # 假设请求体要求为JSON格式
-    # }
-    # # 请求体数据，根据API要求构造，这里假设包含常见的参数如模型、输入提示、生成长度等，需按实际调整
-    # request_data = {
-    #     "model": "ep-20250111221520-5pcbg",
-    #     "prompt": prompt_text,
-    #     "max_tokens": 50  # 假设生成的最大字符数，按实际需求改
-    # }
-    # try:
-    #     response = requests.post(api_url, headers=headers, json=request_data)
-    #     if response.status_code == 200:
-    #         result = response.json()
-    #         return result.get('generated_text', '')  # 假设返回结果中生成文字在这个字段下，按实际改
-    #     else:
-    #         return f"请求失败，状态码: {response.status_code}，错误信息: {response.text}"
-    # except requests.RequestException as e:
-    #     return f"请求发生异常: {str(e)}"
+
 if __name__ == '__main__':
     prompt = "请帮我写一段描写春天景色的优美文字"
     result_text = generate_text(prompt)
