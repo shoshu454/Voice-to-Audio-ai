@@ -64,24 +64,25 @@ def recognize_speech():
 
     # Use the microphone as the audio source
     with sr.Microphone() as source:
-        while 1:
-            print("Adjusting for ambient noise... Please wait.")
-            recognizer.adjust_for_ambient_noise(source)  # Calibrates to ambient noise
-            print("Listening... Speak now.")
 
-            try:
-                # Capture audio from the microphone
-                audio = recognizer.listen(source)
+        # print("Adjusting for ambient noise... Please wait.")
+        recognizer.adjust_for_ambient_noise(source)  # Calibrates to ambient noise
+        print("Listening... Speak now.")
 
-                # Use Google's free Web Speech API
-                print("Recognizing...")
-                text = recognizer.recognize_google(audio, language="zh-CN")
-                print("You said:", text)
+        try:
+            # Capture audio from the microphone
+            audio = recognizer.listen(source)
 
-            except sr.UnknownValueError:
-                print("Sorry, I couldn't understand the audio.")
-            except sr.RequestError as e:
-                print(f"API request error: {e}")
+            # Use Google's free Web Speech API
+            # print("Recognizing...")
+            text = recognizer.recognize_google(audio)
+            # print("You said:", text)
+            return text
+
+        except sr.UnknownValueError:
+            print("Sorry, I couldn't understand the audio.")
+        except sr.RequestError as e:
+            print(f"API request error: {e}")
 def text_to_speech(text):
     engine = pyttsx3.init()
     engine.setProperty("rate", 150)  # Speed of speech
@@ -111,20 +112,26 @@ def generate_text(prompt_text):
     })
     headers = {
         'Authorization': 'Bearer 8cdebf6b-d122-402b-b703-66b6c66c5639',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'max_tokens': '50'
     }
 
     response = requests.request("POST", url, headers=headers, data=payload)
-    print(response['text'])
+
+    # message_content = response_json.get('message', {}).get('content')
+    # response = {'text': ''}
+    # response['text'] = {"choices":[{"finish_reason":"stop","index":0,"logprobs":'null',"message":{"content":"以下是一段描写春天景色的优美文字：\n\n春天如一幅绚丽的画卷，。","role":"assistant"}}],"created":1736777574,"id":"021736777566162e9c84b913dc3d17489c8a44078364cc12b2d4e","model":"doubao-pro-4k-240515","object":"chat.completion","usage":{"completion_tokens":220,"prompt_tokens":19,"total_tokens":239,"prompt_tokens_details":{"cached_tokens":0}}}
+    response_json = response.json()
+    content = response_json['choices'][0]['message']['content']
+    # print(content)
+    return content
 
 
 if __name__ == '__main__':
-    prompt = "请帮我写一段描写春天景色的优美文字"
+    prompt = recognize_speech()
     result_text = generate_text(prompt)
     print(result_text)
-    # text = input("Enter the text you want to convert to speech: ")
     text_to_speech(result_text)
-    # recognize_speech()
     # app = QApplication(sys.argv)
     # ykGuiObj = Gui()
     # ykGuiObj.ui.show()
