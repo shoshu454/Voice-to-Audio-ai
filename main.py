@@ -95,7 +95,7 @@ def text_to_speech(text):
 
 def generate_text(prompt_text):
     # 火山引擎API的端点地址，这里需要替换为真实有效的地址
-    url = "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
+    url = input("url")
 
     payload = json.dumps({
         "model": input("model"),
